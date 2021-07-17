@@ -2,33 +2,33 @@ package bTree;
 
 public class BNode
 {
-	static int t;  //variable to determine order of tree
+	static int t;  //variavel que determina a orde da arvore
 
-	int count; // number of keys in node
+	int count; //numero de chaves em um nodo
 
-	int key[];  // array of key values
+	int key[];  //array do valor das chaves
 
-	BNode child[]; //array of references
+	BNode child[]; //array de referencias
 
-	boolean leaf; //is node a leaf or not
+	boolean leaf; //se o nodo e uma folha ou nao
 
-	BNode parent;  //parent of current node.
+	BNode parent;  //pais do nodo atual
 
 	public BNode(){}
 
 	public BNode(int t, BNode parent)
 	{
-		this.t = t;  //assign size
+		this.t = t;  //designar o tamanho
 
-		this.parent = parent; //assign parent
+		this.parent = parent; //designar o pai
 
-		key = new int[2*t - 1];  // array of proper size
+		key = new int[2*t - 1];  //array do proprio tamanho atual
 
-		child = new BNode[2*t]; // array of refs proper size
+		child = new BNode[2*t]; //array de referencia do proprio tamanho
 
-		leaf = true; // everynode is leaf at first;
+		leaf = true; //todo nodo comeca como uma folha
 
-		count = 0; //until we add keys later.
+		count = 0; //ate adicionar outras chaves mais tarde
 	}
 
 	public int getValue(int index)

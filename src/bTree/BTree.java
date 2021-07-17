@@ -3,117 +3,106 @@ package bTree;
 public class BTree
 {
 
-	static int order; // order of tree
 
-	BNode root;  //every tree has at least a root node
+	static int order; //ordenacao da arvore
+
+	BNode root;  //toda arvore tem pelo menos um nodo raiz
 
 	public BTree(int order)
 	{
 		this.order = order;
-
 		root = new BNode(order, null);
 
 	}
 
 	public BNode search(BNode root, int key)
 	{
-		int i = 0;//we always want to start searching the 0th index of node.
+		int i = 0;//sempre queremos comecar a busca no indice zero do nodo
 
-		while(i < root.count && key > root.key[i])//keep incrementing
-                  							  //in node while key >
-				                    			  //current value.
+		while(i < root.count && key > root.key[i])//continua incrementando no nodo enquanto a chava for maior que o valor atual
 		{
 			i++;
 		}
 
-		if(i <= root.count && key == root.key[i])//obviously if key is in node
-							                     //we went to return node.
+		if(i <= root.count && key == root.key[i])//se a chave esta no nodo entao retorna o nodo
+							                     
 		{
-
-
 			return root;
 		}
 
-		if(root.leaf)//since we've already checked root
-  			    //if it is leaf we don't have anything else to check
-      {
-
+		if(root.leaf)//ja que ja checamos a raiz, se for a folha nao tem muito o que checar
+  			    
+        {
 			return null ;
-
 		}
-		else//else if it is not leave recurse down through ith child
+		else//caso nao, percorre ao proximo filho
 		{
-
 			return search(root.getChild(i),key);
-
 		}
 	}
 
 	public void split(BNode x, int i, BNode y)
 	{
-		BNode z = new BNode(order,null);//gotta have extra node if we are
-	                					//to split.
+		BNode z = new BNode(order,null);//precisa de um nodo extra em caso precise fazer a divisao
+	                					
 
-		z.leaf = y.leaf;//set boolean to same as y
+		z.leaf = y.leaf;//setar o mesmo valor que o y
 
-		z.count = order - 1;//this is updated size
+		z.count = order - 1;//esse e o novo valor 
 
 		for(int j = 0; j < order - 1; j++)
 		{
-			z.key[j] = y.key[j+order]; //copy end of y into front of z
+			z.key[j] = y.key[j+order]; //copiar o final do y com o inicio do z
 
 		}
-		if(!y.leaf)//if not leaf we have to reassign child nodes.
+		if(!y.leaf)//caso nao esteja na folha, tem que reordenar os nodos filhos
 		{
 			for(int k = 0; k < order; k++)
 			{
-				z.child[k] = y.child[k+order]; //reassing child of y
+				z.child[k] = y.child[k+order]; //reordenando os filhos de y
 			}
 		}
 
-		y.count = order - 1; //new size of y
+		y.count = order - 1; //novo tamanho de y
 
-		for(int j = x.count ; j> i ; j--)//if we push key into x we have
-		{				 //to rearrange child nodes
-
-			x.child[j+1] = x.child[j]; //shift children of x
-
+		for(int j = x.count ; j> i ; j--)//se puxar a chava para x, temos que reordenar os nodos filhos
+		{
+			x.child[j+1] = x.child[j]; // puxar o filho de x
 		}
-		x.child[i+1] = z; //reassign i+1 child of x
+		
+		x.child[i+1] = z; //redesignar i+1 para o filho de x
 
 		for(int j = x.count; j> i; j--)
 		{
-			x.key[j + 1] = x.key[j]; // shift keys
+			x.key[j + 1] = x.key[j];
 		}
-		x.key[i] = y.key[order-1];//finally push value up into root.
+		x.key[i] = y.key[order-1];//finalmente puxar os valores para a raiz
 
-		y.key[order-1 ] = 0; //erase value where we pushed from
+		y.key[order-1 ] = 0; //apagar o valor de onde veio
 
 		for(int j = 0; j < order - 1; j++)
 		{
-			y.key[j + order] = 0; //'delete' old values
+			y.key[j + order] = 0; //deletar os valores antigos
 		}
 
-
-
-		x.count ++;  //increase count of keys in x
+		x.count ++;  //aumentar o contar de chaves no x
 	}
 
 	public void nonfullInsert(BNode x, int key)
 	{
-		int i = x.count; //i is number of keys in node x
+		int i = x.count; //i e o numero de chaves no nodo x
 
 		if(x.leaf)
 		{
-			while(i >= 1 && key < x.key[i-1])//here find spot to put key.
+			while(i >= 1 && key < x.key[i-1])//aqui acha o lugar para colocar a chave
 			{
-				x.key[i] = x.key[i-1];//shift values to make room
+				x.key[i] = x.key[i-1];//puxa os valores para dar espaco
 
-				i--;//decrement
+				i--;//decrementa
 			}
 
-			x.key[i] = key;//finally assign value to node
-			x.count ++; //increment count of keys in this node now.
+			x.key[i] = key;//finalmente, designar os valores para o nodo
+			x.count ++; //incrementar o contador de chaves para esse nodo
 
 		}
 
@@ -121,16 +110,14 @@ public class BTree
 		else
 		{
 			int j = 0;
-			while(j < x.count  && key > x.key[j])//find spot to recurse
-			{			             //on correct child  		
+			while(j < x.count  && key > x.key[j])//achar um lugar para um recurso no filho correto
+			{			             		
 				j++;
 			}
 
-		//	i++;
-
 			if(x.child[j].count == order*2 - 1)
 			{
-				split(x,j,x.child[j]);//call split on node x's ith child
+				split(x,j,x.child[j]);//chamar o metodo de dividir no nodo x
 
 				if(key > x.key[j])
 				{
@@ -138,50 +125,50 @@ public class BTree
 				}
 			}
 
-			nonfullInsert(x.child[j],key);//recurse
+			nonfullInsert(x.child[j],key);//recurso
 		}
 	}
 
 	public void insert(BTree t, int key)
 	{
-		BNode r = t.root;//this method finds the node to be inserted as 
-				 //it goes through this starting at root node.
-		if(r.count == 2*order - 1)//if is full
+		BNode r = t.root;//esse metodo acha o nodo a ser inserido.
+				 		 //comeca pelo nodo raiz.
+		if(r.count == 2*order - 1)//se tiver cheio
 		{
-			BNode s = new BNode(order,null);//new node
+			BNode s = new BNode(order,null);//cria um nodo
 
 			t.root = s;    //\
 	    			       // \	
 			s.leaf = false;//  \
-	    			       //   > this is to initialize node.
+	    			       //   > para iniciar o nodo.
 			s.count = 0;   //  /
 	    			       // /	
 			s.child[0] = r;///
 
-			split(s,0,r);//split root
+			split(s,0,r);//dividir a raiz
 
-			nonfullInsert(s, key); //call insert method
+			nonfullInsert(s, key); //chamada para inserir o metodo
 		}
 		else
-			nonfullInsert(r,key);//if its not full just insert it
+			nonfullInsert(r,key);//se nao tiver cheio, so insere e deu boa
 	}
 
 	public void print(BNode n)
 	{
 		for(int i = 0; i < n.count; i++)
 		{
-			System.out.print(n.getValue(i)+" " );//this part prints root node
+			System.out.print(n.getValue(i)+" " );//essa parte printa o nodo
 		}
 
-		if(!n.leaf)//this is called when root is not leaf;
+		if(!n.leaf)//esse so e chamado quando a raiz nao e uma folha
 		{
 
-			for(int j = 0; j <= n.count  ; j++)//in this loop we recurse
-			{				  //to print out tree in
-				if(n.getChild(j) != null) //preorder fashion.
-				{			  //going from left most
-				System.out.println();	  //child to right most
-				print(n.getChild(j));     //child.
+			for(int j = 0; j <= n.count  ; j++)//in this loop we recurse nesse loop e para imprimir de uma forma pre ordenada
+			{				  				   //indo do filho mais esquerda para o mais a direita 
+				if(n.getChild(j) != null) 
+				{			  
+				System.out.println();
+				print(n.getChild(j));
 				}
 			}
 		}
@@ -211,9 +198,9 @@ public class BTree
      public void deleteKey(BTree t, int key)
      {
 			       
-		BNode temp = new BNode(order,null);//temp Bnode
+		BNode temp = new BNode(order,null);//nodo temporario
 			
-		temp = search(t.root,key);//call of search method on tree for key
+		temp = search(t.root,key);//chamada do metodo de busca para procurar uma chave
 
 		if(temp.leaf && temp.count > order - 1)
 		{
@@ -232,7 +219,7 @@ public class BTree
 		}
 		else
 		{
-			System.out.println("This node is either not a leaf or has less than order - 1 keys.");
+			System.out.println("Esse nodo não é nem uma folha ou tem menos ao menos 1 chave");
 		}
      }
 

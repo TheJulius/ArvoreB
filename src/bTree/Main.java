@@ -8,47 +8,47 @@ public class Main
 	{
         Scanner input = new Scanner( System.in );
 		int n,n2,temp;
-		System.out.print("Enter the t of the Tree?  ");
+		System.out.print("Adicione a ordem da árvore: ");
 		n=input.nextInt();
 		
         while ( n<2)
 		{	
-            System.out.print("Please enter a integer greater than 1 : ");
-			n=input.nextInt();//  User inputs the order of Tree and is assinged to N.
+            System.out.print("Por favor, adicionar um valor maior que 1 : ");
+			n=input.nextInt();//N e a ordem da arvore adicionada pelo ususario
 		}
-		BTree tree = new BTree(n);//  B-Tree Tree with order  N is created.
+		BTree tree = new BTree(n);//Arvore de Ordem N criada
 
-        // Initial Values are added to the Tree.. The user and Input any number of Values.
-		System.out.print("\n How many values do you want to enter?:  ");	
+        // Valores iniciais adicionados a arvore, pode adicionar qualquer valor inteiro.
+		System.out.print("\n Quantos valores gostaria de adicionar? :  ");	
         n2 = input.nextInt();
 
         for ( int i=0;i< n2;i++)
 		{
-            System.out.print("\nEnter Value:");
+            System.out.print("\n Insira o valor:");
 			System.out.println(i+1);
 			temp=input.nextInt();
 			tree.insert(tree,temp);
 		}
-		int choice,k;// Variables used to control the Repeated loop of the MENU.
+		int choice,k;//Variaveis criadas para controlar a repeticao do menu.
 
         boolean flag;
 		flag=true;
-			System.out.println("\tM\tE\tN\tU\n");
-			System.out.println("1. Enter more values in a Tree");
-			System.out.println("2. Print the whole  Tree in preorder");
-			System.out.println("3. Search for a Key and print the Node it belongs to");
-			System.out.println("4. Delete a key from the leaf");
-			System.out.println("5. Exit");
+			System.out.println("MENU\n");
+			System.out.println("1. Adicionar mais valores a árvore");
+			System.out.println("2. Mostrar a arvore pre-ordenada");
+			System.out.println("3. Procurar por uma chave e Mostrar a qual nodo pertence");
+			System.out.println("4. Apagar a chave de uma folha");
+			System.out.println("5. Sair");
 
-		while (flag)// This While loop runs as long as the user enters anything other than a 5.
+		while (flag)// Esse loop vai rodar enquanto o usuario digitar qualquer coisa diferente de 5.
 		{
 
 
-			System.out.print("\nPlease enter your choice::");
+			System.out.print("\nPor favor, digite sua escolha: ");
 			choice=input.nextInt();
 			if ( choice == 5)
 			{		
-                System.out.printf("The program is exiting...");
+                System.out.printf("Programa finalizado com sucesso...");
 			    System.exit(0);
 				flag=false;
 				break;
@@ -58,57 +58,57 @@ public class Main
 			{
 			 	switch(choice)
 			 	{
-			 		case 1: //If the User Enters 1 this case is executed and 
-                            //its function is to Enter more values in a Tree.
+			 		case 1: //Se o usuario inserir 1, esse caso e executado
+                            //Essa funcao e para adicionar mais valores na arvore.
 	
-                        System.out.print("How many values do you want to enter?:");
+                        System.out.print("Quantos valores gostaria de adicionar?:");
 						n2=input.nextInt();
 
                         for ( int i=0;i< n2;i++)
 						{
-                            System.out.print("\nEnter Value: ");
+                            System.out.print("\nAdicione os valores: ");
 							System.out.println(i+1);
 							temp=input.nextInt();
 							tree.insert(tree,temp);
                         }
                         break;
 
-					case 2: //If the User Enters 2 this case is executed and 
-                            //its function is to Print the whole  Tree in preorder format.
+					case 2: //Se o usuario inserir 2, esse caso e executado
+                            //Esse caso mostra toda a arvore no formato pre-ordenado.
 						
                         tree.print(tree.root);
 						System.out.println();
 						break;
 
-					case 3: //If the User Enters 3 this case is executed and 
-                            //its function is to Delete a key from the leaf
+					case 3: //Se o usuario inserir 3, esse caso e executado
+                            //Esse caso e para buscar uma chave de uma folha
 		
-                        System.out.println("What is the key you wish to search for:");
+                        System.out.println("Insira a chave que deseja procurar:");
 						int key2=input.nextInt();
 						tree.SearchPrintNode(tree,key2);
 
 						break;
-					case 4: //If User Enters 4, this case is executed 
-                            //Its Function is to search for a Key and print the Node it belongs to
+					case 4: //Se o usuario inserir 4, esse caso e executado
+                            //Esse caso e para deletar a chave e mostrar a arvore pre-ordenada depois do delete
 						
-                        System.out.println("Enter a key to be deleted:");
+                        System.out.println("Insira a chave que deseja apagar:");
 						int key=input.nextInt();
 						tree.deleteKey(tree,key);
-						System.out.println("Here is the tree printed in preorder after delete");
+						System.out.println("Esta é a árvore reordenada após o delete");
 						tree.print(tree.root);
 						break;
 
-					case 5: //If the User Enters 5, this case is executed and 
-                            //its function is to Exit
+					case 5: //Se o usuario inserir 3, esse caso e executado
+                            //Esse caso e para sair do menu e fechar o sistema 
 			
                         System.exit(0);
 						break;
 
-						default: // If the User enters a wrong choice, then this case is executed.
-						System.out.println("\nPlease enter a valid choice of 1,2,3 or 4\n");
+						default: // Se o usuario inserir um valor invalido, mostra essa mensagem.
+						System.out.println("\nPor favor, insira um valor valido entre 1,2,3,4 ou 5 para sair\n");
 						break;
-	 			}//end of switch block
-			 }//end of else block
-		}//end while(flag)
+	 			}//final do switch 
+			 }//final do else
+		}//final do while
 	}//main
-}//class
+}//classe
