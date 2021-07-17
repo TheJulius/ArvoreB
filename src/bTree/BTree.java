@@ -183,7 +183,7 @@ public class BTree
 		if (temp==null)
 		{
 
-		System.out.println("The Key does not exist in this tree");
+		System.out.println("A chave nao existe nesta árvore");
 		}
 
 		else
